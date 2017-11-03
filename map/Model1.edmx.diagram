@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="919d17408f464433b24e6f4749f4c501" Name="Diagram1" ZoomLevel="77" >
+        <EntityTypeShape EntityType="Model1.Usuario" Width="1.5" PointX="1.25" PointY="0.5" />
+        <EntityTypeShape EntityType="Model1.Reserva" Width="1.5" PointX="3.5" PointY="0.5" />
+        <EntityTypeShape EntityType="Model1.Documento" Width="1.5" PointX="6" PointY="0.5" />
+        <EntityTypeShape EntityType="Model1.Ejemplar" Width="1.5" PointX="6" PointY="4.5" />
+        <EntityTypeShape EntityType="Model1.Categoria" Width="1.5" PointX="8.375" PointY="0.5" />
+        <EntityTypeShape EntityType="Model1.Detalle" Width="1.5" PointX="3.375" PointY="4.5" />
+        <EntityTypeShape EntityType="Model1.Prestamo" Width="1.5" PointX="1.25" PointY="3.25" />
+        <EntityTypeShape EntityType="Model1.Multa" Width="1.5" PointX="1.25" PointY="5.375" />
+        <EntityTypeShape EntityType="Model1.Autor" Width="1.5" PointX="8.125" PointY="5.25" />
+        <EntityTypeShape EntityType="Model1.Autoria" Width="1.5" PointX="8.375" PointY="2.625" />
+        <AssociationConnector Association="Model1.UsuarioReserva" />
+        <AssociationConnector Association="Model1.DocumentoReserva" />
+        <AssociationConnector Association="Model1.UsuarioPrestamo" />
+        <AssociationConnector Association="Model1.PrestamoDetalle" />
+        <AssociationConnector Association="Model1.MultaDetalle" />
+        <AssociationConnector Association="Model1.DocumentoEjemplar" />
+        <AssociationConnector Association="Model1.EjemplarDetalle" />
+        <AssociationConnector Association="Model1.CategoriaDocumento" />
+        <AssociationConnector Association="Model1.DocumentoAutoria" />
+        <AssociationConnector Association="Model1.AutorAutoria" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="UsuarioSet" EntityType="Model1.Store.UsuarioSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReservaSet" EntityType="Model1.Store.ReservaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DocumentoSet" EntityType="Model1.Store.DocumentoSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EjemplarSet" EntityType="Model1.Store.EjemplarSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CategoriaSet" EntityType="Model1.Store.CategoriaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DetalleSet" EntityType="Model1.Store.DetalleSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PrestamoSet" EntityType="Model1.Store.PrestamoSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MultaSet" EntityType="Model1.Store.MultaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AutorSet" EntityType="Model1.Store.AutorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AutoriaSet" EntityType="Model1.Store.AutoriaSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UsuarioReserva" Association="Model1.Store.UsuarioReserva">
+      <End Role="Usuario" EntitySet="UsuarioSet" />
+      <End Role="Reserva" EntitySet="ReservaSet" />
+    </AssociationSet>
+    <AssociationSet Name="DocumentoReserva" Association="Model1.Store.DocumentoReserva">
+      <End Role="Documento" EntitySet="DocumentoSet" />
+      <End Role="Reserva" EntitySet="ReservaSet" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioPrestamo" Association="Model1.Store.UsuarioPrestamo">
+      <End Role="Usuario" EntitySet="UsuarioSet" />
+      <End Role="Prestamo" EntitySet="PrestamoSet" />
+    </AssociationSet>
+    <AssociationSet Name="PrestamoDetalle" Association="Model1.Store.PrestamoDetalle">
+      <End Role="Prestamo" EntitySet="PrestamoSet" />
+      <End Role="Detalle" EntitySet="DetalleSet" />
+    </AssociationSet>
+    <AssociationSet Name="MultaDetalle" Association="Model1.Store.MultaDetalle">
+      <End Role="Multa" EntitySet="MultaSet" />
+      <End Role="Detalle" EntitySet="DetalleSet" />
+    </AssociationSet>
+    <AssociationSet Name="DocumentoEjemplar" Association="Model1.Store.DocumentoEjemplar">
+      <End Role="Documento" EntitySet="DocumentoSet" />
+      <End Role="Ejemplar" EntitySet="EjemplarSet" />
+    </AssociationSet>
+    <AssociationSet Name="EjemplarDetalle" Association="Model1.Store.EjemplarDetalle">
+      <End Role="Ejemplar" EntitySet="EjemplarSet" />
+      <End Role="Detalle" EntitySet="DetalleSet" />
+    </AssociationSet>
+    <AssociationSet Name="CategoriaDocumento" Association="Model1.Store.CategoriaDocumento">
+      <End Role="Categoria" EntitySet="CategoriaSet" />
+      <End Role="Documento" EntitySet="DocumentoSet" />
+    </AssociationSet>
+    <AssociationSet Name="DocumentoAutoria" Association="Model1.Store.DocumentoAutoria">
+      <End Role="Documento" EntitySet="DocumentoSet" />
+      <End Role="Autoria" EntitySet="AutoriaSet" />
+    </AssociationSet>
+    <AssociationSet Name="AutorAutoria" Association="Model1.Store.AutorAutoria">
+      <End Role="Autor" EntitySet="AutorSet" />
+      <End Role="Autoria" EntitySet="AutoriaSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UsuarioSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Plan" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReservaSet">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+      <PropertyRef Name="DocumentoIndex" />
+    </Key>
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="Posicion" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="nvarchar(max)" Nullable="false" DefaultValue="Activo" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="DocumentoIndex" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DocumentoSet">
+    <Key>
+      <PropertyRef Name="Index" />
+    </Key>
+    <Property Name="Index" Type="int" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tipo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CategoriaId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EjemplarSet">
+    <Key>
+      <PropertyRef Name="CodBarras" />
+    </Key>
+    <Property Name="CodBarras" Type="int" Nullable="false" />
+    <Property Name="Numero" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="nvarchar(max)" Nullable="false" DefaultValue="Disponible" />
+    <Property Name="DocumentoIndex" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoriaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DiasPrestamo" Type="int" Nullable="false" />
+    <Property Name="MultaDia" Type="decimal" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetalleSet">
+    <Key>
+      <PropertyRef Name="PrestamoId" />
+      <PropertyRef Name="EjemplarCodBarras" />
+    </Key>
+    <Property Name="FechaDev" Type="datetime" Nullable="true" />
+    <Property Name="PrestamoId" Type="int" Nullable="false" />
+    <Property Name="EjemplarCodBarras" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PrestamoSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MultaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Valor" Type="decimal" Nullable="false" />
+    <Property Name="FechaCanc" Type="datetime" Nullable="true" />
+    <Property Name="Detalle_PrestamoId" Type="int" Nullable="false" />
+    <Property Name="Detalle_EjemplarCodBarras" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AutorSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AutoriaSet">
+    <Key>
+      <PropertyRef Name="DocumentoIndex" />
+      <PropertyRef Name="AutorId" />
+    </Key>
+    <Property Name="Rol" Type="nvarchar(max)" Nullable="false" DefaultValue="Principal" />
+    <Property Name="DocumentoIndex" Type="int" Nullable="false" />
+    <Property Name="AutorId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UsuarioReserva">
+    <End Role="Usuario" Type="Model1.Store.UsuarioSet" Multiplicity="1" />
+    <End Role="Reserva" Type="Model1.Store.ReservaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Reserva">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DocumentoReserva">
+    <End Role="Documento" Type="Model1.Store.DocumentoSet" Multiplicity="1" />
+    <End Role="Reserva" Type="Model1.Store.ReservaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Documento">
+        <PropertyRef Name="Index" />
+      </Principal>
+      <Dependent Role="Reserva">
+        <PropertyRef Name="DocumentoIndex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioPrestamo">
+    <End Role="Usuario" Type="Model1.Store.UsuarioSet" Multiplicity="1" />
+    <End Role="Prestamo" Type="Model1.Store.PrestamoSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Prestamo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PrestamoDetalle">
+    <End Role="Prestamo" Type="Model1.Store.PrestamoSet" Multiplicity="1" />
+    <End Role="Detalle" Type="Model1.Store.DetalleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prestamo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle">
+        <PropertyRef Name="PrestamoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MultaDetalle">
+    <End Role="Multa" Type="Model1.Store.MultaSet" Multiplicity="*" />
+    <End Role="Detalle" Type="Model1.Store.DetalleSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Detalle">
+        <PropertyRef Name="PrestamoId" />
+        <PropertyRef Name="EjemplarCodBarras" />
+      </Principal>
+      <Dependent Role="Multa">
+        <PropertyRef Name="Detalle_PrestamoId" />
+        <PropertyRef Name="Detalle_EjemplarCodBarras" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DocumentoEjemplar">
+    <End Role="Documento" Type="Model1.Store.DocumentoSet" Multiplicity="1" />
+    <End Role="Ejemplar" Type="Model1.Store.EjemplarSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Documento">
+        <PropertyRef Name="Index" />
+      </Principal>
+      <Dependent Role="Ejemplar">
+        <PropertyRef Name="DocumentoIndex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EjemplarDetalle">
+    <End Role="Ejemplar" Type="Model1.Store.EjemplarSet" Multiplicity="1" />
+    <End Role="Detalle" Type="Model1.Store.DetalleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ejemplar">
+        <PropertyRef Name="CodBarras" />
+      </Principal>
+      <Dependent Role="Detalle">
+        <PropertyRef Name="EjemplarCodBarras" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategoriaDocumento">
+    <End Role="Categoria" Type="Model1.Store.CategoriaSet" Multiplicity="1" />
+    <End Role="Documento" Type="Model1.Store.DocumentoSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Documento">
+        <PropertyRef Name="CategoriaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DocumentoAutoria">
+    <End Role="Documento" Type="Model1.Store.DocumentoSet" Multiplicity="1" />
+    <End Role="Autoria" Type="Model1.Store.AutoriaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Documento">
+        <PropertyRef Name="Index" />
+      </Principal>
+      <Dependent Role="Autoria">
+        <PropertyRef Name="DocumentoIndex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AutorAutoria">
+    <End Role="Autor" Type="Model1.Store.AutorSet" Multiplicity="1" />
+    <End Role="Autoria" Type="Model1.Store.AutoriaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Autor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Autoria">
+        <PropertyRef Name="AutorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Contexto" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UsuarioSet" EntityType="Model1.Usuario" />
+          <EntitySet Name="ReservaSet" EntityType="Model1.Reserva" />
+          <EntitySet Name="DocumentoSet" EntityType="Model1.Documento" />
+          <EntitySet Name="EjemplarSet" EntityType="Model1.Ejemplar" />
+          <EntitySet Name="CategoriaSet" EntityType="Model1.Categoria" />
+          <EntitySet Name="DetalleSet" EntityType="Model1.Detalle" />
+          <EntitySet Name="PrestamoSet" EntityType="Model1.Prestamo" />
+          <EntitySet Name="MultaSet" EntityType="Model1.Multa" />
+          <EntitySet Name="AutorSet" EntityType="Model1.Autor" />
+          <EntitySet Name="AutoriaSet" EntityType="Model1.Autoria" />
+          <AssociationSet Name="UsuarioReserva" Association="Model1.UsuarioReserva">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Reserva" EntitySet="ReservaSet" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentoReserva" Association="Model1.DocumentoReserva">
+            <End Role="Documento" EntitySet="DocumentoSet" />
+            <End Role="Reserva" EntitySet="ReservaSet" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioPrestamo" Association="Model1.UsuarioPrestamo">
+            <End Role="Usuario" EntitySet="UsuarioSet" />
+            <End Role="Prestamo" EntitySet="PrestamoSet" />
+          </AssociationSet>
+          <AssociationSet Name="PrestamoDetalle" Association="Model1.PrestamoDetalle">
+            <End Role="Prestamo" EntitySet="PrestamoSet" />
+            <End Role="Detalle" EntitySet="DetalleSet" />
+          </AssociationSet>
+          <AssociationSet Name="MultaDetalle" Association="Model1.MultaDetalle">
+            <End Role="Multa" EntitySet="MultaSet" />
+            <End Role="Detalle" EntitySet="DetalleSet" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentoEjemplar" Association="Model1.DocumentoEjemplar">
+            <End Role="Documento" EntitySet="DocumentoSet" />
+            <End Role="Ejemplar" EntitySet="EjemplarSet" />
+          </AssociationSet>
+          <AssociationSet Name="EjemplarDetalle" Association="Model1.EjemplarDetalle">
+            <End Role="Ejemplar" EntitySet="EjemplarSet" />
+            <End Role="Detalle" EntitySet="DetalleSet" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriaDocumento" Association="Model1.CategoriaDocumento">
+            <End Role="Categoria" EntitySet="CategoriaSet" />
+            <End Role="Documento" EntitySet="DocumentoSet" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentoAutoria" Association="Model1.DocumentoAutoria">
+            <End Role="Documento" EntitySet="DocumentoSet" />
+            <End Role="Autoria" EntitySet="AutoriaSet" />
+          </AssociationSet>
+          <AssociationSet Name="AutorAutoria" Association="Model1.AutorAutoria">
+            <End Role="Autor" EntitySet="AutorSet" />
+            <End Role="Autoria" EntitySet="AutoriaSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Nombre" Type="String" Nullable="false" />
+          <Property Name="Plan" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <NavigationProperty Name="Reservas" Relationship="Model1.UsuarioReserva" FromRole="Usuario" ToRole="Reserva" />
+          <NavigationProperty Name="Prestamos" Relationship="Model1.UsuarioPrestamo" FromRole="Usuario" ToRole="Prestamo" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="DocumentoIndex" />
+          </Key>
+          <Property Name="Fecha" Type="DateTime" Nullable="false" />
+          <Property Name="Posicion" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" Nullable="false" DefaultValue="Activo" />
+          <NavigationProperty Name="Usuario" Relationship="Model1.UsuarioReserva" FromRole="Reserva" ToRole="Usuario" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Documento" Relationship="Model1.DocumentoReserva" FromRole="Reserva" ToRole="Documento" />
+          <Property Name="DocumentoIndex" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="Index" />
+          </Key>
+          <Property Name="Index" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Titulo" Type="String" Nullable="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" />
+          <NavigationProperty Name="Reserva" Relationship="Model1.DocumentoReserva" FromRole="Documento" ToRole="Reserva" />
+          <NavigationProperty Name="Ejemplares" Relationship="Model1.DocumentoEjemplar" FromRole="Documento" ToRole="Ejemplar" />
+          <NavigationProperty Name="Categoria" Relationship="Model1.CategoriaDocumento" FromRole="Documento" ToRole="Categoria" />
+          <Property Name="CategoriaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Autorias" Relationship="Model1.DocumentoAutoria" FromRole="Documento" ToRole="Autoria" />
+        </EntityType>
+        <EntityType Name="Ejemplar">
+          <Key>
+            <PropertyRef Name="CodBarras" />
+          </Key>
+          <Property Name="CodBarras" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" Nullable="false" DefaultValue="Disponible" />
+          <NavigationProperty Name="Documento" Relationship="Model1.DocumentoEjemplar" FromRole="Ejemplar" ToRole="Documento" />
+          <Property Name="DocumentoIndex" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Detalles" Relationship="Model1.EjemplarDetalle" FromRole="Ejemplar" ToRole="Detalle" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Nombre" Type="String" Nullable="false" />
+          <Property Name="DiasPrestamo" Type="Int32" Nullable="false" />
+          <Property Name="MultaDia" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="Documentos" Relationship="Model1.CategoriaDocumento" FromRole="Categoria" ToRole="Documento" />
+        </EntityType>
+        <EntityType Name="Detalle" >
+          <Key>
+            <PropertyRef Name="PrestamoId" />
+            <PropertyRef Name="EjemplarCodBarras" />
+          </Key>
+          <Property Name="FechaDev" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="Prestamo" Relationship="Model1.PrestamoDetalle" FromRole="Detalle" ToRole="Prestamo" />
+          <Property Name="PrestamoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Multa" Relationship="Model1.MultaDetalle" FromRole="Detalle" ToRole="Multa" />
+          <NavigationProperty Name="Ejemplar" Relationship="Model1.EjemplarDetalle" FromRole="Detalle" ToRole="Ejemplar" />
+          <Property Name="EjemplarCodBarras" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prestamo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Model1.UsuarioPrestamo" FromRole="Prestamo" ToRole="Usuario" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Detalles" Relationship="Model1.PrestamoDetalle" FromRole="Prestamo" ToRole="Detalle" />
+        </EntityType>
+        <EntityType Name="Multa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" />
+          <Property Name="FechaCanc" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="Detalle" Relationship="Model1.MultaDetalle" FromRole="Multa" ToRole="Detalle" />
+        </EntityType>
+        <EntityType Name="Autor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Nombre" Type="String" Nullable="false" />
+          <NavigationProperty Name="Autorias" Relationship="Model1.AutorAutoria" FromRole="Autor" ToRole="Autoria" />
+        </EntityType>
+        <EntityType Name="Autoria" >
+          <Key>
+            <PropertyRef Name="DocumentoIndex" />
+            <PropertyRef Name="AutorId" />
+          </Key>
+          <Property Name="Rol" Type="String" Nullable="false" DefaultValue="Principal" />
+          <NavigationProperty Name="Documento" Relationship="Model1.DocumentoAutoria" FromRole="Autoria" ToRole="Documento" />
+          <Property Name="DocumentoIndex" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Autor" Relationship="Model1.AutorAutoria" FromRole="Autoria" ToRole="Autor" />
+          <Property Name="AutorId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UsuarioReserva">
+          <End Type="Model1.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model1.Reserva" Role="Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentoReserva">
+          <End Type="Model1.Documento" Role="Documento" Multiplicity="1" />
+          <End Type="Model1.Reserva" Role="Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="Index" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="DocumentoIndex" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioPrestamo">
+          <End Type="Model1.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model1.Prestamo" Role="Prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prestamo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PrestamoDetalle">
+          <End Type="Model1.Prestamo" Role="Prestamo" Multiplicity="1" />
+          <End Type="Model1.Detalle" Role="Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prestamo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Detalle">
+              <PropertyRef Name="PrestamoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MultaDetalle">
+          <End Type="Model1.Multa" Role="Multa" Multiplicity="0..1" />
+          <End Type="Model1.Detalle" Role="Detalle" Multiplicity="1" />
+        </Association>
+        <Association Name="DocumentoEjemplar">
+          <End Type="Model1.Documento" Role="Documento" Multiplicity="1" />
+          <End Type="Model1.Ejemplar" Role="Ejemplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="Index" />
+            </Principal>
+            <Dependent Role="Ejemplar">
+              <PropertyRef Name="DocumentoIndex" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EjemplarDetalle">
+          <End Type="Model1.Ejemplar" Role="Ejemplar" Multiplicity="1" />
+          <End Type="Model1.Detalle" Role="Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ejemplar">
+              <PropertyRef Name="CodBarras" />
+            </Principal>
+            <Dependent Role="Detalle">
+              <PropertyRef Name="EjemplarCodBarras" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoriaDocumento">
+          <End Type="Model1.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="Model1.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentoAutoria">
+          <End Type="Model1.Documento" Role="Documento" Multiplicity="1" />
+          <End Type="Model1.Autoria" Role="Autoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="Index" />
+            </Principal>
+            <Dependent Role="Autoria">
+              <PropertyRef Name="DocumentoIndex" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AutorAutoria">
+          <End Type="Model1.Autor" Role="Autor" Multiplicity="1" />
+          <End Type="Model1.Autoria" Role="Autoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Autor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Autoria">
+              <PropertyRef Name="AutorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Contexto">
+    <EntitySetMapping Name="UsuarioSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Usuario)">
+        <MappingFragment StoreEntitySet="UsuarioSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Plan" ColumnName="Plan" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReservaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Reserva)">
+        <MappingFragment StoreEntitySet="ReservaSet">
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="DocumentoIndex" ColumnName="DocumentoIndex" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Posicion" ColumnName="Posicion" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DocumentoSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Documento)">
+        <MappingFragment StoreEntitySet="DocumentoSet">
+          <ScalarProperty Name="Index" ColumnName="Index" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EjemplarSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Ejemplar)">
+        <MappingFragment StoreEntitySet="EjemplarSet">
+          <ScalarProperty Name="CodBarras" ColumnName="CodBarras" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="DocumentoIndex" ColumnName="DocumentoIndex" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoriaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Categoria)">
+        <MappingFragment StoreEntitySet="CategoriaSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="DiasPrestamo" ColumnName="DiasPrestamo" />
+          <ScalarProperty Name="MultaDia" ColumnName="MultaDia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Detalle)">
+        <MappingFragment StoreEntitySet="DetalleSet">
+          <ScalarProperty Name="PrestamoId" ColumnName="PrestamoId" />
+          <ScalarProperty Name="EjemplarCodBarras" ColumnName="EjemplarCodBarras" />
+          <ScalarProperty Name="FechaDev" ColumnName="FechaDev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PrestamoSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Prestamo)">
+        <MappingFragment StoreEntitySet="PrestamoSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MultaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Multa)">
+        <MappingFragment StoreEntitySet="MultaSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="FechaCanc" ColumnName="FechaCanc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AutorSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Autor)">
+        <MappingFragment StoreEntitySet="AutorSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AutoriaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Autoria)">
+        <MappingFragment StoreEntitySet="AutoriaSet">
+          <ScalarProperty Name="DocumentoIndex" ColumnName="DocumentoIndex" />
+          <ScalarProperty Name="AutorId" ColumnName="AutorId" />
+          <ScalarProperty Name="Rol" ColumnName="Rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MultaDetalle" TypeName="Model1.MultaDetalle" StoreEntitySet="MultaSet">
+      <EndProperty Name="Detalle">
+        <ScalarProperty Name="PrestamoId" ColumnName="Detalle_PrestamoId" />
+        <ScalarProperty Name="EjemplarCodBarras" ColumnName="Detalle_EjemplarCodBarras" />
+      </EndProperty>
+      <EndProperty Name="Multa">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
