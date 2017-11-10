@@ -128,9 +128,54 @@ namespace map
             {
                 using (var ctx = new Contexto())
                 {
-                    CargaDatos(ctx);
+                //CargaDatos(ctx);
+                var reser = ctx.ReservaSet.Where(u => u.UsuarioId.Equals(2));
+                foreach (var y in reser)
+                {
+                    var reser2 = y.Documento.Autorias;
+                    foreach (var xyz in reser2)
+                    {
+                        Console.Write(xyz.Autor.Nombre);
+                    }
                 }
+
+                Console.Read();
+
+
+
+                }
+
+                
+
             }
+
+        public static void DB4(Contexto ctx)
+        {
+
+            //CargaDatos(ctx);
+
+            var res = ctx.DocumentoSet;
+
+            foreach (var z in res)
+            {
+                Console.WriteLine("Documento: " + z.Titulo + " Reservas: " + z.Reserva.Count()
+
+                    );
+            }
+
+            
+        }
+
+        public static void DB6(Contexto ctx)
+        {
+            var reser = ctx.ReservaSet.Where(u => u.UsuarioId.Equals(2));
+            foreach (var y in reser)
+            {
+                Console.Write(y.Documento.Titulo);
+            }
+        }
+       
+
 
 
         
